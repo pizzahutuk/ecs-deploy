@@ -375,12 +375,6 @@ function createNewTaskDefJson() {
     # Build new DEF with jq filter
     NEW_DEF=$(echo "$DEF" | jq "{${NEW_DEF_JQ_FILTER}}")
 
-    # >>> Add 50GB DISK <<<
-    if `echo ${REQUIRES_COMPATIBILITIES[@]} | grep -q "FARGATE"`; then
-      NEW_DEF=$(echo "$NEW_DEF" | jq '. + {ephemeralStorage: {sizeInGiB: 50}}')
-    fi
-    # >>> Add 50GB DISK <<<
-
     # If in test mode output $NEW_DEF
     if [ "$BASH_SOURCE" != "$0" ]; then
       echo "$NEW_DEF"
